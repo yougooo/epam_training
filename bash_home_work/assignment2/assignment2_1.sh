@@ -17,8 +17,10 @@ tax () {
 	   echo 'your tax is 0'
     elif [[ $1 -ge 5000 && $1 -lt 30000  ]]
     then
+	   echo $(echo $salary*0.1 | bc) 
 	   echo 'your tax is 10%'
     else
+	   echo $(echo $salary*0.2 | bc)
 	   echo 'your tax is 20%'
     fi
 
