@@ -6,7 +6,6 @@ base=${path##*/}     # for take local path in function,
 abs=${path%%$base}   # 'base' it's start directory name
                      # 'abs' it's other part of absolute
 		     # path without 'base'. 
-echo $base
 
 tree_like () {
 	for file in $1/*
@@ -17,7 +16,11 @@ tree_like () {
 }
 
 echo "Full path is $path"
-echo
-tree_like $path
+echo Directory: ./${path##$abs}
+
+temp=`tree_like $path`
+
+echo "`python space.py "$temp"`"
+
 exit 0
 
