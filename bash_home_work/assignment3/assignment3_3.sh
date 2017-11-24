@@ -2,11 +2,8 @@
 
 
 [ $# -eq 0  ] && path=$PWD || path=$1
+[ -f $path  ] && echo 'File detected!' && exit 65
 
-base=${path##*/}     # for take local path in function,
-abs=${path%%$base}   # 'base' it's start directory name
-                     # 'abs' it's other part of absolute
-		     # path without 'base'. 
 
 bincheck () {
 	if [[ -s $1 ]]                
@@ -23,19 +20,19 @@ bincheck () {
             }
 
 
+
 tree_like () {
 	for file in $1/*
 	do
-	    [ -f $file ] && echo "File: ${file##$abs} `bincheck $file`"
-	    [ -d $file ] && echo "Directory: ${file##$abs}" && tree_like $file  
+	    [ -f $file ] && echo "File: $file `bincheck $file`"
+	    [ -d $file ] && echo "Directory: $file" && tree_like $file  
 	done
              }
 
+
 echo "Full path is $path"
-echo Directory: ${path##$abs}
-
+echo Directory: `basename $path`
 temp=`tree_like $path`
-
 echo "`python space.py "$temp"`"
 
 exit 0
