@@ -1,4 +1,3 @@
-# python 2
 #!/usr/lib/python
 
 # python2 !
@@ -78,7 +77,7 @@ if __name__ == "__main__":
     network, broadcast = hosts(sys.argv[1], int(sys.argv[2]))
     ips = list(ip_gen(network, broadcast))
 
-    for i in range(5):
+    for i in range(3):
         worker = Thread(target=ping_chek, args=(i,queue))
         worker.setDaemon(True)
         worker.start()
