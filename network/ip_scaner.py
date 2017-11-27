@@ -1,6 +1,6 @@
 #!/usr/lib/python
 
-# python2 !
+# python2
 
 import subprocess
 from threading import Thread
@@ -63,7 +63,6 @@ def ping_chek(i,q):
                                stderr=subprocess.STDOUT)
         if ping == 0:
             print("{} is alive".format(ip))
-
         else:
             print("{} did not respond".format(ip))
 
