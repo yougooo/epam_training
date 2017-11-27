@@ -63,20 +63,18 @@ def ping_chek(i,q):
                                stderr=subprocess.STDOUT)
         if ping == 0:
             print("{} is alive".format(ip))
-        else:
-            print("{} did not respond".format(ip))
-
+            with open('alive_ip.txt', 'a') as alive:
+                alive.write(ip+'\n')
         q.task_done()
-
 
 
 if __name__ == "__main__":
 
     queue = Queue()
     network, broadcast = hosts(sys.argv[1], int(sys.argv[2]))
-    ips = list(ip_gen(network, broadcast))
+    ips = ip_gen(network, broadcast)
 
-    for i in range(3):
+    for i in range(5):
         worker = Thread(target=ping_chek, args=(i,queue))
         worker.setDaemon(True)
         worker.start()
