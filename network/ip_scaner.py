@@ -3,9 +3,10 @@
 # python2
 
 import subprocess
+import sys
 from threading import Thread
 from Queue import Queue
-import sys
+
 
 memo_list = [1, 2, 4, 8, 16, 32, 64, 128]
 
@@ -50,7 +51,7 @@ def ip_gen(start, end):
                     yield [octet_1, octet_2, octet_3, octet_4]
 
 
-def ping_chek(i,q):
+def ping_check(i,q):
     """
     Check available hosts in network for ping.
     """
@@ -75,7 +76,7 @@ if __name__ == "__main__":
     ips = ip_gen(network, broadcast)
 
     for i in range(5):
-        worker = Thread(target=ping_chek, args=(i,queue))
+        worker = Thread(target=ping_check, args=(i,queue))
         worker.setDaemon(True)
         worker.start()
 
