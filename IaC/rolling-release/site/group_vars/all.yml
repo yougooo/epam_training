@@ -1,0 +1,3 @@
+---
+ansible_user: alex
+app_port: '80'

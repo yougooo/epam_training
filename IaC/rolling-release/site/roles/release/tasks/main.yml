@@ -1,0 +1,48 @@
+---
+
+- name: drop host from blancer list
+  template:
+          src: curr_upstream.j2
+          dest: /etc/nginx/conf.d/default.conf
+  delegate_to: 'lb'
+
+- name: reload nginx
+  service:
+          name: nginx
+          state: reloaded
+  delegate_to: 'lb'
+
+- name: update app version
+  git:
+          repo: "{{ app_repo }}"
+          dest: "{{ app_folder }}"
+          version: "{{ app_version }}"
+   
+
+- name: restart supervisor
+  service:
+          name: supervisor
+          state: restarted
+
+- name: ensure app is reach
+  wait_for:
+          host: "{{ ansible_host  }}"
+          port: "{{ app_port }}"
+          connect_timeout: 1
+          timeout: 10
+  
+
+
+- name: restore upstream
+  template:
+          src: upstream.j2
+          dest: /etc/nginx/conf.d/default.conf
+  delegate_to: 'lb'
+
+- name: reload nginx
+  service:
+          name: nginx
+          state: reloaded
+  delegate_to: 'lb'
+
+

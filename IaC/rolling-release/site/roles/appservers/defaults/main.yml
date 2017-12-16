@@ -1,0 +1,6 @@
+nodejs_version: "7.x"
+app_name: 'app'
+app_folder: "/var/www/"
+app_repo: "https://bitbucket.org/ZaRDaK/devops-rolling-release"
+app_version: "v2.0.0"
+app_run_file: "index.js"

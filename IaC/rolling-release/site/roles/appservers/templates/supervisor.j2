@@ -1,0 +1,9 @@
+[program: {{ app_name }}]
+directory={{ app_folder }}
+environment=NODE_ENV=production
+command=nodemon {{ app_run_file }}
+user=root
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/{{ app_name }}.log
+

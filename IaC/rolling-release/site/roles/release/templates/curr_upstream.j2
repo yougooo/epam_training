@@ -1,0 +1,7 @@
+upstream balancer{
+          {% for host in groups['appservers'] %}
+                {% if host != inventory_hostname  %}
+server {{ hostvars[host]['ansible_host'] }};
+                {% endif %}
+          {% endfor %}
+           }

@@ -1,0 +1,5 @@
+upstream balancer{
+          {% for host in groups['appservers'] %}
+                server {{ hostvars[host]['ansible_host'] }};
+          {% endfor  %}
+           }

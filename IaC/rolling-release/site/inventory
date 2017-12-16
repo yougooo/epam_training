@@ -1,0 +1,7 @@
+[loadbalancers]
+lb ansible_host=35.198.185.230
+
+[appservers]
+app1 ansible_host=35.198.115.17
+app2 ansible_host=35.198.70.45
+app3 ansible_host=35.198.149.205

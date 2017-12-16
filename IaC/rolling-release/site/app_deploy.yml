@@ -1,0 +1,11 @@
+---
+
+- hosts: appservers
+  roles: 
+          - role: appservers
+            become: true
+
+- hosts: loadbalancers
+  roles:
+          - role: loadbalancer
+            become: true

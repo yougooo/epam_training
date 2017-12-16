@@ -1,0 +1,8 @@
+---
+
+- hosts: appservers
+  serial: 1
+  any_errors_fatal: true
+  roles:
+          - role: release
+            become: true

@@ -1,0 +1,46 @@
+---
+
+- include: app_deps.yml
+  
+- name: clone app
+  git:
+          repo: "{{ app_repo  }}"
+          dest: "{{ app_folder }}"
+          version: "{{ app_version }}"
+  register: git_finished
+
+- name: ensure node deps
+  shell: npm i
+  args:
+          chdir: "{{ app_folder }}"
+
+- name: ensure env conf
+  template:
+          src: env.j2
+          dest: "{{ app_folder }}/.env"
+
+- name: ensure supervisor conf
+  template:
+          src: supervisor.j2
+          dest: /etc/supervisor/conf.d/app.conf
+
+- name: reread supervisor app list
+  shell: supervisorctl reread
+
+- name: update supervisor app list
+  shell: supervisorctl update
+
+- name: start app
+  shell: supervisorctl start "{{ app_name }}"
+  
+
+
+
+
+
+
+
+
+
+  
+
