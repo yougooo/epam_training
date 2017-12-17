@@ -117,8 +117,8 @@ upstream balancer{
 ```
 After update if all ok and app port responds, restore upstream. If something fall down stop apps update. 
 
-#### Step 5. Run ansible playbook
+#### Step 5. Run ansible playbook. 
 
-[app_deploy.yml](https://github.com/yougooo/epam_training/blob/master/IaC/rolling-release/site/app_deploy.yml) for deploy app and up loadbalancer 
+[app_deploy.yml](https://github.com/yougooo/epam_training/blob/master/IaC/rolling-release/site/app_deploy.yml) for deploy app and up loadbalancer. 
 
-[release.yml](https://github.com/yougooo/epam_training/blob/master/IaC/rolling-release/site/release.yml) for update version in repo we have 3(v1.0.0, v1.1.0(broken),v2.0.0(current))
+[release.yml](https://github.com/yougooo/epam_training/blob/master/IaC/rolling-release/site/release.yml) for update app version (v1.0.0, v1.1.0(broken),v2.0.0(current)).
