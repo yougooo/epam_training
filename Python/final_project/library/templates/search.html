@@ -15,17 +15,18 @@
    <table class="table table-bordered">
     <thead>
       <tr>
-        <th>#</th>
         <th>Book</th>
         <th>Author(s)</th>
+	<th>Genre</th>
       </tr>
     </thead>
    {% for book,authors in books %}
    <tbody>
       <tr>
-        <th scope="row">1</th>
-        <td>{{ book }}</td>
+       <td>rowNumber</td>
+      <td>{{ book }}</td>
       <td>{{ authors }}</td>
+      <td></td>
      </tr>
   </tbody>
    {% endfor %}
