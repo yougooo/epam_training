@@ -67,7 +67,7 @@ state: present
 
 Do this with role appservers task [main.yml](https://github.com/yougooo/epam_training/blob/master/IaC/rolling-release/site/roles/appservers/tasks/main.yml).
 
-Supervisor take control under app process, and take care for start app when system is booting. For each app server ensure supervisor config is present, with [supervisor.j2](https://github.com/yougooo/epam_training/tree/master/IaC/rolling-release/site/roles/appservers/templates) conf. 
+Supervisor take control under app process, and take care for start app when system is booting. For each app server ensure supervisor config is present, with [supervisor.j2](https://github.com/yougooo/epam_training/blob/master/IaC/rolling-release/site/roles/appservers/templates/supervisor.j2) conf. 
 ```yml
 - name: ensure supervisor conf
   template:
