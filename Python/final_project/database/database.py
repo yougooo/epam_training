@@ -34,7 +34,7 @@ with psycopg2.connect(connection_row) as connect:
 
         cursor.execute("CREATE TABLE book(" +
                        "book_id SERIAL PRIMARY KEY," +
-                       "book_name VARCHAR(100) NOT NULL," +
+                       "book_name VARCHAR(256) NOT NULL," +
                        "publication_date DATE NOT NULL," +
                        "description TEXT," +
                        "update_date DATE NOT NULL default CURRENT_DATE,"+
