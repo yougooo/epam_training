@@ -10,6 +10,7 @@
       <script src = "{% static "source/js/bootstrap.min.js"%}" type = "text/javascript"></script>
    </head>
    <body>
+	   <p>found {{ count  }} results</p>
    <div class='book_table'>
    {% if books %}
    <table class="table table-bordered">
@@ -17,22 +18,19 @@
       <tr>
         <th>Book</th>
         <th>Author(s)</th>
-	<th>Genre</th>
       </tr>
     </thead>
    {% for book,authors in books %}
    <tbody>
       <tr>
-       <td>rowNumber</td>
       <td>{{ book }}</td>
       <td>{{ authors }}</td>
-      <td></td>
      </tr>
   </tbody>
    {% endfor %}
   </table>
    {% else %}
-      <p>not found</p>
+      <p>try type more than 3 letters</p>
    {% endif %}
       </div>
    </body>

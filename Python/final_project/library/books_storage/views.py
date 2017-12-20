@@ -9,8 +9,8 @@ def index(request):
 
 
 def search(request):
-    if request.method == "GET":
-        s = "%{}%".format(list(request.GET.items())[0][0])
+    if request.method == "GET" and len(list(request.GET.items())[0][0]) > 3:
+        s = "{}%".format(list(request.GET.items())[0][0])
         with connection.cursor() as cursor:
             cursor.execute("""SELECT * FROM (SELECT (SELECT book_name
                                              FROM book
@@ -24,5 +24,11 @@ def search(request):
                           WHERE LOWER(book_name) LIKE LOWER(%s) or
                                 LOWER(full_name) LIKE LOWER(%s)""", [s,s])
             result = cursor.fetchall()
-    return render_to_response('search.html', {'books':result})
+        #if len(result) > 1000:
+        #    result = result[:1000]
+    else:
+        result = []
+        count = 0
+
+    return render_to_response('search.html', {'books':result, 'count':len(result)})
 
