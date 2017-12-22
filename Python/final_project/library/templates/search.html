@@ -1,16 +1,6 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <title>Final Project</title>
-      <link rel="stylesheet" href="{% static "source/css/bootstrap.min.css" %}">
-      <link rel="stylesheet" href="{% static "css/style.css" %}">
-     	<script src="http://code.jquery.com/jquery-latest.js"></script>
-      <script src = "{% static "source/js/bootstrap.min.js"%}" type = "text/javascript"></script>
-   </head>
-   <body>
-	   <p>found {{ count  }} results</p>
+{% extends 'index.html'  %}
+{% block content %}	  
+   <p>found {{ count  }} results</p>
    <div class='book_table'>
    {% if books %}
    <table class="table table-bordered">
@@ -33,5 +23,5 @@
       <p>try type more than 3 letters</p>
    {% endif %}
       </div>
-   </body>
-   </html>
+{% endblock content %}
+  
