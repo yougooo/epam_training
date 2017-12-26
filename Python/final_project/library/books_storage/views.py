@@ -15,12 +15,13 @@ class Search(ListView):
     context_object_name = 'books'
 
     def get_queryset(self):
-        q = self.request.GET.get("q")
+        q = self.request.GET.get("q", '')
         if q and len(q) > 2:
             q = q.strip()
-            q = "{}%".format(q)
-            with connection.cursor() as cursor:
-                cursor.execute("""SELECT * FROM (SELECT (SELECT CONCAT(book_name,', ', date_part('year', publication_date)) AS book_name
+            if q:
+                q = "%{}%".format(q)
+                with connection.cursor() as cursor:
+                    cursor.execute("""SELECT * FROM (SELECT (SELECT CONCAT(book_name,', ', date_part('year', publication_date)) AS book_name
                                              FROM book
                                              WHERE book_entry.book_id = book.book_id),
                                              string_agg((SELECT CONCAT(first_name, ' ', last_name)
@@ -31,8 +32,8 @@ class Search(ListView):
                           AS result
                           WHERE LOWER(book_name) LIKE LOWER(%s) or
                                 LOWER(full_name) LIKE LOWER(%s)""", (q, q,))
-                queryset = cursor.fetchall()
-            return queryset
+                    queryset = cursor.fetchall()
+                return queryset
         return []
 
 
