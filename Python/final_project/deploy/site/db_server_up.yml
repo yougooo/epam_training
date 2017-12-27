@@ -1,0 +1,7 @@
+---
+- name: db update
+  hosts: database
+  become: yes
+  become_user: root
+  roles:
+          - role: database 

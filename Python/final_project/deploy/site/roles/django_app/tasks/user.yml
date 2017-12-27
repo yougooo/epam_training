@@ -1,0 +1,17 @@
+---
+
+- name: app user
+  user:
+          name: web_user
+          state: present
+
+- name: app group
+  group:
+          name: webserver
+          state: present
+
+- name: add app user to the app group
+  user:
+          name: web_user
+          group: webserver
+          state: present

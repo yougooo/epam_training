@@ -1,0 +1,17 @@
+server {
+	listen 80;
+
+        server_name balans;
+        
+        client_max_body_size 4G;
+        
+        location /static/ {
+            alias {{ statics_path }};    
+        }      
+    
+        location / {
+            proxy_pass http://balancer;
+        }
+}
+
+

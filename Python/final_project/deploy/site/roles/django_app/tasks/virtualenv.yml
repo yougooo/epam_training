@@ -1,0 +1,20 @@
+---
+
+#- name: ensure app deps install
+#  pip:
+#        requirements: files/requirements.txt
+#          virtualenv: "{{ virtualenv_path  }}"
+
+- name: ensure gunicorn install
+  pip:
+          name: gunicorn
+          virtualenv: "{{ virtualenv_path }}"
+
+- name: ensure gunicron start script present
+  template:
+          src: gunicorn.j2
+          dest: "{{ gunicorn_run }}"
+          mode: 0755
+
+ 
+

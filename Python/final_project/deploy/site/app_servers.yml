@@ -1,0 +1,8 @@
+---
+
+- name: deploy app
+  hosts: appservers
+  become: yes
+  become_user: root
+  roles:
+          - role: django_app

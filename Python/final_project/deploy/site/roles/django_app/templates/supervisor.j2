@@ -1,0 +1,6 @@
+[program:{{ project_name }}]
+command={{ gunicorn_run }}
+user=root
+stdout_logfile=/var/log/library/supervisor_log
+redirect_stderr=true
+enviroment=LANG=en_US.UTF-8, LC_ALL=en_US.UTF-8

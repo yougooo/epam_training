@@ -1,0 +1,6 @@
+---
+
+db_name: "library"
+db_user: "alex"
+dump_name: "postgres_db_dump.sql"
+

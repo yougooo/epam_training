@@ -1,0 +1,15 @@
+---
+
+- name: ensure dependencies install
+  become: yes
+  become_user: root
+  apt:
+          name: "{{ item }}"
+          state: latest
+  with_items:
+          - git
+          - build-essential
+          - supervisor
+          - python-virtualenv
+          - nginx
+

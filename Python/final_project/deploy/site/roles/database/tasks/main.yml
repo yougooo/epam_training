@@ -1,0 +1,97 @@
+---
+
+- name: add postgresql repo
+  become: yes
+  apt_key:
+          url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+          state: present
+
+- name: ensure apt-transport-https
+  become: yes
+  apt:
+          name: apt-transport-https
+          state: present
+
+- name: add postgresql repo to sorce list
+  become: yes
+  apt_repository:
+          repo: 'deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main'
+          update_cache: yes
+          state: present
+
+- name: ensure locale
+  locale_gen: name=en_US.UTF-8
+
+- name: ensure postgres deps install
+  become: yes
+  apt:
+          name: "{{ item }}"
+          update_cache: yes
+          state: present
+  with_items:
+          - postgresql
+          - postgresql-contrib
+          - python-psycopg2 
+
+- name: ensure pg_nba.conf setup
+  become: yes
+  lineinfile:
+          path: /etc/postgresql/10/main/pg_hba.conf
+          state: present
+          regexp: "host    all             all             127.0.0.1/32            md5"
+          line: "host    all             all             35.198.0.0/16           md5"
+  notify:
+          'restart postgresql'
+
+- name: ensure postgres listen external host
+  become: yes
+  lineinfile:
+          path: /etc/postgresql/10/main/postgresql.conf
+          state: present
+          regexp: "#listen_addresses = 'localhost'"
+          line: "listen_addresses = '*'"
+
+- name: ensure dump present 
+  copy:
+          src: files/postgres_db_dump.sql
+          dest: "/tmp/{{ dump_name }}"
+          mode: 0777
+
+- name: ensure database is created
+  become: yes
+  become_user: postgres
+  postgresql_db:
+          name: "{{ db_name }}"
+          encoding: UTF-8
+          lc_collate: en_US.UTF-8
+          lc_ctype: en_US.UTF-8
+          template: 'template0'
+          state: present
+
+- name: ensure postgres user present
+  become: yes
+  become_user: postgres
+  postgresql_user:
+          db: "{{ db_name }}"
+          name: "{{ ansible_user  }}"
+          password: "{{ db_password }}"
+          encrypted: yes
+          priv: ALL
+          state: present
+
+- name: ensure database restore
+  become: yes
+  become_user: postgres
+  postgresql_db:
+          name: "{{ db_name }}"
+          state: restore
+          target: "/tmp/{{ dump_name }}"         
+
+- name: ensure postgresql config setup
+  become: yes
+  lineinfile:
+          path: /etc/postgresql/10/main/postgresql.conf
+          state: present
+          regexp: 'shared_buffers = \d+MB'
+          line: 'shared_buffers = 1024MB'
+

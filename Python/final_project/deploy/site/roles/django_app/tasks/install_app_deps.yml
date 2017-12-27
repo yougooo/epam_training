@@ -1,0 +1,28 @@
+---
+
+- name: ensure apt-transport-https
+  become: yes
+  become_user: root
+  apt:
+          name: apt-transport-https
+          state: present
+
+- name: update repo
+  become: yes
+  become_user: root
+  apt:
+          update_cache: yes
+
+
+- name: ensure dependencies install
+  become: yes
+  become_user: root
+  apt:
+          name: "{{ item }}"
+          state: latest
+  with_items:
+          - git
+          - build-essential
+          - supervisor
+          - python-virtualenv
+

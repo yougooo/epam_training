@@ -1,0 +1,19 @@
+---
+
+ansible_user: "alex"
+
+# db variable
+db_password: 'deployapp95'
+db_name: "library"
+db_user: "alex"
+db_host: "35.198.111.74"
+
+# app variable
+project_name: "library"
+app_path: "/home/{{ansible_user}}"
+project_folder: "{{app_path}}/app_deploy/{{project_name}}"
+env_name: "env"
+virtualenv_path: "{{ app_path }}/app_deploy/{{ env_name }}"
+gunicorn_run: "{{ virtualenv_path }}/bin/gunicorn_start.bash"
+statics_path: "{{ project_folder }}/static/"
+

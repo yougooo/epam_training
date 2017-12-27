@@ -1,0 +1,17 @@
+#!/bin/bash
+
+NAME={{ project_name }}
+DJANGODIR={{ project_folder }}
+USER={{ ansible_user }}
+GROUP={{ ansible_user }}
+LOGFILE=/var/log/gunicorn/{{ project_name }}
+LOGDIR=$(dirname $LOGFILE)
+NUM_WORKERS=2
+DJANGO_SETTINGS_MODULE={{ project_name }}.settings
+DJANGO_WSGI_MODULE={{ project_name }}.wsgi
+
+cd $DJANGODIR
+source {{ virtualenv_path }}/bin/activate
+
+test -d $LOGDIR || mkdir -p $LOGDIR
+exec {{ virtualenv_path }}/bin/gunicorn ${DJANGO_WSGI_MODULE}:application -w $NUM_WORKERS --user=$USER --group=$GROUP --bind=0.0.0.0:80 --log-level=debug --log-file=$LOGFILE 2>>$LOGFILE

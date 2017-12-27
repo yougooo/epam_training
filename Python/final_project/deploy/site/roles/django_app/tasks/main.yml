@@ -1,0 +1,48 @@
+---
+
+- include_tasks: install_app_deps.yml
+
+- include_tasks: user.yml
+
+- include_tasks: django.yml
+
+- name: ensure gunicron start script present
+  template:
+          src: gunicorn.j2
+          dest: "{{ gunicorn_run }}"
+          mode: 0755
+
+- name: ensure log dir present
+  file:
+          path: "/var/log/library/"
+          state: directory
+          mode: 0755
+
+- name: ensure log file present
+  file:
+          path: "/var/log/library/supervisor_log"
+          state: touch
+          mode: 0755
+
+- name: ensure supervisor conf present
+  become: yes
+  become_user: root
+  template:
+          src: supervisor.j2
+          dest: "/etc/supervisor/conf.d/{{ project_name }}.conf"
+
+- name: reread supervisor app list
+  become: yes
+  become_user: root
+  shell: supervisorctl reread
+
+- name: update supervisor app list
+  become: yes
+  become_user: root
+  shell: supervisorctl update
+
+- name: start app
+  become: yes
+  become_user: root
+  shell: supervisorctl start "{{ project_name }}"
+  

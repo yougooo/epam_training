@@ -1,0 +1,8 @@
+---
+
+- name: static deploy
+  hosts: loadbalancers
+  become: yes
+  become_user: root
+  roles:
+          - role: loadbalancer

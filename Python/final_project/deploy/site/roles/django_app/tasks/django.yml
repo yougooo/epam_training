@@ -1,0 +1,53 @@
+---
+
+- name: clone git repo
+  git:
+          repo: https://github.com/yougooo/app_deploy
+          dest: "{{ app_path }}/app_deploy"
+          force: yes
+  register: git_ok
+
+- name: ensure setteng.py in production stage
+  lineinfile:
+          path: "{{project_folder}}/{{project_name}}/settings.py"
+          state: present
+          regexp: "{{ item.regexp }}"
+          line: "{{ item.line }}"
+  with_items:
+          - { regexp: "DEBUG = True", line: "DEBUG = False"}
+          - { regexp: "'NAME': '.+'", line: "'NAME': '{{ db_name  }}'," }
+          - { regexp: "'USER': '.+'", line: "'USER': '{{db_user}}',"}
+          - { regexp: "'PASSWORD': '.+'", line: "'PASSWORD': '{{db_password}}',"}
+          - { regexp: "'HOST': '.+'", line: "'HOST': '{{db_host}}',"}
+          - { regexp: "'PORT': '.+'", line: "'PORT': '5432',"}  
+
+- name: ensure virtualenv absent
+  file:
+          state: absent
+          path: "{{virtualenv_path}}/"
+
+- name: create virtualenv
+  command: virtualenv -p python3.5 "{{virtualenv_path}}"
+
+- name: install django
+  pip:
+          virtualenv: "{{virtualenv_path}}"
+          name: django
+          version: 1.11
+
+- name: install psycopg2
+  pip:
+          virtualenv: "{{virtualenv_path}}"
+          name: psycopg2
+
+- name: ensure gunicorn install
+  pip:
+          name: gunicorn
+          virtualenv: "{{ virtualenv_path }}"
+
+- name: colect static files
+  django_manage:
+          command: collectstatic
+          app_path: "{{ project_folder }}"
+          virtualenv: "{{ virtualenv_path }}"
+

@@ -1,0 +1,8 @@
+---
+project_name: "library"
+app_path: "/home/{{ansible_user}}"
+project_folder: "{{app_path}}/app_deploy/{{project_name}}"
+env_name: "env"
+virtualenv_path: "{{ app_path }}/app_deploy/{{ env_name }}"
+gunicorn_run: "{{ virtualenv_path }}/bin/gunicorn_start.bash"
+
