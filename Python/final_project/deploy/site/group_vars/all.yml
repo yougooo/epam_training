@@ -3,9 +3,9 @@
 ansible_user: "alex"
 
 # db variable
-db_password: 'deployapp95'
-db_name: "library"
-db_user: "alex"
+db_password: ''
+db_name: ""
+db_user: ""
 db_host: "35.198.111.74"
 
 # app variable
