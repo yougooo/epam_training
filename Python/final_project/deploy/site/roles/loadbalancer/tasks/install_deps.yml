@@ -8,8 +8,6 @@
           state: latest
   with_items:
           - git
-          - build-essential
-          - supervisor
           - python-virtualenv
           - nginx
 

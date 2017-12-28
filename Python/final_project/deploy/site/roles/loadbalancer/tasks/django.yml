@@ -40,11 +40,6 @@
           virtualenv: "{{virtualenv_path}}"
           name: psycopg2
 
-- name: ensure gunicorn install
-  pip:
-          name: gunicorn
-          virtualenv: "{{ virtualenv_path }}"
-
 - name: colect static files
   django_manage:
           command: collectstatic
