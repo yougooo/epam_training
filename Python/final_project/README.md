@@ -27,7 +27,7 @@ just for test app, more Django way use something like this:
 ```python
 Author.objects.get(first_name__icontains='Alex')
 ```
-Or in database level do something like this:
+Or on database level do something like this:
 ```sql 
 CREATE VIEW bookentry AS SELECT ... 
 ```
@@ -37,4 +37,12 @@ In this level used bootstrap it is html/css/js framework for easy make pretty UI
 Common pattern for templetes it is made one 'base.html' page with ```{% block content %}``` then use it in different templates ```{% extends 'base.html' %}``` just rewrite ```{% block content %}```
 
 
+## Deploy
+Like in [ansible home work](https://github.com/yougooo/epam_training/tree/master/IaC/rolling-release) 
+- up 3 app server
+- 1 load balancer server
+- 1 database server
 
+<div style="text-align:center"><img src =http://makescreen.ru/i/0af8cfc7222b2cef0a92a1be0ccdcb.png /></div>
+
+With google cloud instance 
