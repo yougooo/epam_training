@@ -38,11 +38,10 @@ Common pattern for templetes it is made one 'base.html' page with ```{% block co
 
 
 ## Deploy
-Like in [ansible home work](https://github.com/yougooo/epam_training/tree/master/IaC/rolling-release) 
+Like in [ansible home work](https://github.com/yougooo/epam_training/tree/master/IaC/rolling-release), with google cloud instance :
 - up 3 app server
 - 1 load balancer server
 - 1 database server
 
-<div style="text-align:center"><img src =http://makescreen.ru/i/0af8cfc7222b2cef0a92a1be0ccdcb.png /></div>
+<p align="center"><img src =http://makescreen.ru/i/0af8cfc7222b2cef0a92a1be0ccdcb.png /></p>
 
-With google cloud instance 
