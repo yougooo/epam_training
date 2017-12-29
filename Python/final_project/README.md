@@ -39,9 +39,12 @@ Common pattern for templetes it is made one 'base.html' page with ```{% block co
 
 ## Deploy
 Like in [ansible home work](https://github.com/yougooo/epam_training/tree/master/IaC/rolling-release), with google cloud instance :
-- up 3 app server
+- up 3 app servers
 - 1 load balancer server
 - 1 database server
 
 <p align="center"><img src =http://makescreen.ru/i/0af8cfc7222b2cef0a92a1be0ccdcb.png /></p>
 
+Actually for test app one server is enough, but if you need scale your solutions, good things will be separate database, web server, web application, static files, media files. For example Nginx take care about dynumic request and Apache return static files. In my case nginx take care about simple load balancing and return application static files. Test app is stateless and it is good for horizontal scaling. 
+
+Django have simple implementation http servers, but it is only for quick developers test, not for production. That's why we need one more http server. Pure python web framework like Flask, Tornado, Django, etc, don't know http protocol. Here help WSGI(Web Server Gateway Interface) it is specification which give standart how python web application and web servers can interact. Okay but with default configurations web server like Apache or Nginx, don't know WSGI. It is mean we need web server which know WSGI and http, in my case it is gunicorn. So in app servers run gunicorn under supervisor, in load balancer colect static files(css style, js scripts, image, etc) and with Nginx upstream call appservers, which connected to database.
